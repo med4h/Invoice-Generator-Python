@@ -9,6 +9,8 @@ app.title("Multiverse Invoice Generator Project")
 frame = CTkFrame(app)
 frame.pack()
 
+set_default_color_theme("green")
+
 first_name_label = CTkLabel(frame, text="First Name")
 first_name_label.grid(row=0, column=0)
 last_name_label = CTkLabel(frame, text="Last Name")
@@ -27,7 +29,7 @@ phone_entry.grid(row=1, column=2)
 
 qty_label = CTkLabel(frame, text="Qty")
 qty_label.grid(row=2, column=0)
-qty_entry = Spinbox(frame, min_value=0, max_value=float('inf'), width=phone_entry.winfo_reqwidth(), height=phone_entry.winfo_reqheight())
+qty_entry = Spinbox(frame, min_value=0, max_value=float('inf'), width=phone_entry.winfo_reqwidth()+ 14, height=phone_entry.winfo_reqheight())
 qty_entry.grid(row=3, column=0)
 
 description_label = CTkLabel(frame, text="Description")
@@ -40,7 +42,7 @@ unit_price_label.grid(row=2, column=2)
 unit_price_entry = CTkEntry(frame)
 unit_price_entry.grid(row=3, column=2)
 
-add_button = CTkButton(frame, text="Add Item")
+add_button = CTkButton(frame, text="Add Item", fg_color="#218802")
 add_button.grid(row=4, column=1, pady=20)
 
 columns= ("qty", "description", "price", "total")
@@ -51,5 +53,11 @@ treeview.heading("price", text="Price")
 treeview.heading("total", text="Total")
 
 treeview.grid(row=5, column=0, columnspan=3, padx=20, pady=10)
+
+generate_button = CTkButton(frame, text="Generate", fg_color="#218802")
+generate_button.grid(row=6, column=2, pady=5)
+
+clear_button = CTkButton(frame, text="Clear", fg_color="#218802")
+clear_button.grid(row=6, column=0, pady=20)
 
 app.mainloop()
