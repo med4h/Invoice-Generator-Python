@@ -3,13 +3,22 @@ from spinbox import Spinbox
 from tkinter import ttk
 from PIL import Image
 
+
+
+def add_item():
+    qty = int(qty_entry.get())
+    desc = description_entry.get()
+    price = float(unit_price_entry.get())
+    total = qty*price
+    invoice_item = [qty, desc, price, total]
+    treeview.insert('',0, values=invoice_item)
+
+
 app = CTk()
-# app.geometry("800x400")
-app.title("Multiverse Invoice Generator Project")
+app.title("INVOGEN")
+#add icon to title bar SOMEHOW....
 
-# Add an image to the title of the window
-
-frame = CTkFrame(app)
+frame = CTkFrame(app, fg_color="#222324")
 frame.pack()
 
 set_default_color_theme("green")
@@ -45,7 +54,7 @@ unit_price_label.grid(row=2, column=2)
 unit_price_entry = CTkEntry(frame)
 unit_price_entry.grid(row=3, column=2)
 
-add_button = CTkButton(frame, text="Add Item", fg_color="#218802", hover_color="#1C7202")
+add_button = CTkButton(frame, text="Add Item", fg_color="#218802", hover_color="#1C7202", command= add_item)
 add_button.grid(row=4, column=1, pady=20)
 
 columns= ("qty", "description", "price", "total")
