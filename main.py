@@ -1,8 +1,9 @@
 from customtkinter import *
 from spinbox import Spinbox
+from tkinter import ttk
 
 app = CTk()
-app.geometry("800x400")
+# app.geometry("800x400")
 app.title("Multiverse Invoice Generator Project")
 
 frame = CTkFrame(app)
@@ -38,5 +39,17 @@ unit_price_label = CTkLabel(frame, text="Unit Price")
 unit_price_label.grid(row=2, column=2)
 unit_price_entry = CTkEntry(frame)
 unit_price_entry.grid(row=3, column=2)
+
+add_button = CTkButton(frame, text="Add Item")
+add_button.grid(row=4, column=1, pady=20)
+
+columns= ("qty", "description", "price", "total")
+treeview = ttk.Treeview(frame, columns=columns, show="headings")
+treeview.heading("qty", text="Quantity")
+treeview.heading("description", text="Description")
+treeview.heading("price", text="Price")
+treeview.heading("total", text="Total")
+
+treeview.grid(row=5, column=0, columnspan=3, padx=20, pady=10)
 
 app.mainloop()
