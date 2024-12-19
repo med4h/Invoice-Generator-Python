@@ -23,14 +23,14 @@ class Spinbox(ctk.CTkFrame):
         self.grid_columnconfigure(1, weight=1)  
 
         self.subtract_button = ctk.CTkButton(self, text="-", width=height-6, height=height-6,
-                                                        command=self.subtract_button_callback, fg_color="#218802")
+                                                        command=self.subtract_button_callback, fg_color="#218802", hover_color="#1C7202")
         self.subtract_button.grid(row=0, column=0, padx=(3, 0), pady=3)
 
         self.entry = ctk.CTkEntry(self, width=width-(70), height=height-6, border_width=0)
         self.entry.grid(row=0, column=1, columnspan=1, padx=3, pady=3, sticky="nsew")
 
         self.add_button = ctk.CTkButton(self, text="+", width=height-6, height=height-6,
-                                                  command=self.add_button_callback, fg_color="#218802")
+                                                  command=self.add_button_callback, fg_color="#218802", hover_color="#1C7202")
         self.add_button.grid(row=0, column=2, padx=(0, 3), pady=3)
     
         # default value
