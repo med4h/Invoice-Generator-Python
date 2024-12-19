@@ -1,4 +1,5 @@
 from customtkinter import *
+from spinbox import Spinbox
 
 app = CTk()
 app.geometry("800x400")
@@ -25,7 +26,7 @@ phone_entry.grid(row=1, column=2)
 
 qty_label = CTkLabel(frame, text="Qty")
 qty_label.grid(row=2, column=0)
-qty_entry = CTkEntry(frame)
+qty_entry = Spinbox(frame, min_value=0, max_value=float('inf'), width=phone_entry.winfo_reqwidth(), height=phone_entry.winfo_reqheight())
 qty_entry.grid(row=3, column=0)
 
 description_label = CTkLabel(frame, text="Description")
