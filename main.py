@@ -1,7 +1,21 @@
 from customtkinter import *
 from spinbox import Spinbox
-from tkinter import ttk
-from PIL import Image
+from tkinter import ttk, Tk
+
+def clear_item():
+    qty_entry.set(value=0)
+    description_entry.delete(0, "end")
+    unit_price_entry.delete(0, "end")
+
+def new_invoice():
+    qty_entry.set(value=0)
+    description_entry.delete(0, "end")
+    unit_price_entry.delete(0, "end")
+    first_name_entry.delete(0, "end")
+    last_name_entry.delete(0, "end")
+    phone_entry.delete(0, "end")
+    for item in treeview.get_children():
+        treeview.delete(item)
 
 
 
@@ -12,6 +26,9 @@ def add_item():
     total = qty*price
     invoice_item = [qty, desc, price, total]
     treeview.insert('',0, values=invoice_item)
+    clear_item()
+
+
 
 
 app = CTk()
@@ -69,7 +86,7 @@ treeview.grid(row=5, column=0, columnspan=3, padx=20, pady=10)
 generate_button = CTkButton(frame, text="Generate", fg_color="#218802", hover_color="#1C7202")
 generate_button.grid(row=6, column=2, pady=5)
 
-clear_button = CTkButton(frame, text="Clear", fg_color="#218802", hover_color="#1C7202")
-clear_button.grid(row=6, column=0, pady=20)
+new_invoice_button = CTkButton(frame, text="New Invoice", fg_color="#218802", hover_color="#1C7202", command=new_invoice)
+new_invoice_button.grid(row=6, column=0, pady=20)
 
 app.mainloop()
