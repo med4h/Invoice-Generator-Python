@@ -1,6 +1,7 @@
 from customtkinter import *
 from spinbox import Spinbox
 from tkinter import ttk, Tk
+from docxtpl import DocxTemplate
 
 def clear_item():
     qty_entry.set(value=0)
@@ -8,16 +9,11 @@ def clear_item():
     unit_price_entry.delete(0, "end")
 
 def new_invoice():
-    qty_entry.set(value=0)
-    description_entry.delete(0, "end")
-    unit_price_entry.delete(0, "end")
     first_name_entry.delete(0, "end")
     last_name_entry.delete(0, "end")
     phone_entry.delete(0, "end")
-    for item in treeview.get_children():
-        treeview.delete(item)
-
-
+    treeview.delete(*treeview.get_children())
+    clear_item()
 
 def add_item():
     qty = int(qty_entry.get())
@@ -27,8 +23,6 @@ def add_item():
     invoice_item = [qty, desc, price, total]
     treeview.insert('',0, values=invoice_item)
     clear_item()
-
-
 
 
 app = CTk()
