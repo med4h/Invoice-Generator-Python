@@ -1,7 +1,9 @@
 from customtkinter import *
 from spinbox import Spinbox
-from tkinter import ttk, Tk
+from tkinter import ttk, Tk, messagebox
 from docxtpl import DocxTemplate
+import datetime
+
 
 def clear_item():
     qty_entry.set(value=0)
@@ -12,17 +14,48 @@ def new_invoice():
     first_name_entry.delete(0, "end")
     last_name_entry.delete(0, "end")
     phone_entry.delete(0, "end")
-    treeview.delete(*treeview.get_children())
     clear_item()
+    treeview.delete(*treeview.get_children())
+    invoice_list.clear()
 
+
+invoice_list = []
 def add_item():
     qty = int(qty_entry.get())
     desc = description_entry.get()
-    price = float(unit_price_entry.get())
-    total = qty*price
-    invoice_item = [qty, desc, price, total]
+    price = float(unit_price_entry.get()) 
+    line_total = qty*price
+    invoice_item = [qty, desc, price, line_total]
     treeview.insert('',0, values=invoice_item)
     clear_item()
+    invoice_list.append(invoice_item)
+
+def generate_invoice():
+    doc = DocxTemplate("Invoice_Generator.docx")
+    name = first_name_entry.get()+ " " +last_name_entry.get()
+    phone = phone_entry.get()
+    subtotal = sum(item[3] for item in invoice_list)
+    salestax = 0.0725
+    tax_amount = subtotal * salestax
+    total = subtotal + tax_amount
+    
+
+    doc.render({
+        "name": name,
+        "phone": phone, 
+        "invoice_list": invoice_list,
+        "subtotal": f"{subtotal:.2f}",
+        "salestax": f"{salestax*100:.2f}%",
+        "total": f"{total:.2f}",
+    })
+    
+    doc_name = "new_invoice" + name + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M%S") + ".docx"
+    doc.save(doc_name)
+
+    messagebox.showinfo("Invoice Complete", "Invoice Complete")
+
+    new_invoice()
+
 
 
 app = CTk()
@@ -77,7 +110,7 @@ treeview.heading("total", text="Total")
 
 treeview.grid(row=5, column=0, columnspan=3, padx=20, pady=10)
 
-generate_button = CTkButton(frame, text="Generate", fg_color="#218802", hover_color="#1C7202")
+generate_button = CTkButton(frame, text="Generate", fg_color="#218802", hover_color="#1C7202", command=generate_invoice)
 generate_button.grid(row=6, column=2, pady=5)
 
 new_invoice_button = CTkButton(frame, text="New Invoice", fg_color="#218802", hover_color="#1C7202", command=new_invoice)
