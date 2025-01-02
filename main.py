@@ -3,6 +3,7 @@ from spinbox import Spinbox
 from tkinter import ttk, Tk, messagebox
 from docxtpl import DocxTemplate
 import datetime
+import os
 
 
 def clear_item():
@@ -32,24 +33,24 @@ def add_item():
 
 def generate_invoice():
     doc = DocxTemplate("Invoice_Generator.docx")
-    name = first_name_entry.get()+ " " +last_name_entry.get()
+    name = first_name_entry.get() + " " + last_name_entry.get()
     phone = phone_entry.get()
     subtotal = sum(item[3] for item in invoice_list)
     salestax = 0.0725
     tax_amount = subtotal * salestax
     total = subtotal + tax_amount
-    
 
     doc.render({
         "name": name,
-        "phone": phone, 
+        "phone": phone,
         "invoice_list": invoice_list,
         "subtotal": f"{subtotal:.2f}",
-        "salestax": f"{salestax*100:.2f}%",
+        "salestax": f"{salestax * 100:.2f}%",
         "total": f"{total:.2f}",
     })
-    
-    doc_name = "new_invoice" + name + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M%S") + ".docx"
+
+    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    doc_name = os.path.join(desktop_path, "new_invoice_" + name + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M%S") + ".docx")
     doc.save(doc_name)
 
     messagebox.showinfo("Invoice Complete", "Invoice Complete")
