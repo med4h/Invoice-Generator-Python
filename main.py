@@ -59,7 +59,7 @@ def generate_invoice():
     })
 
     desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-    doc_name = os.path.join(desktop_path, "new_invoice_" + name + datetime.datetime.now().strftime("%Y-%m-%d-%H-%M%S") + ".docx")
+    doc_name = os.path.join(desktop_path, "new_invoice_" + name + "_" + datetime.datetime.now().strftime("%Y-%m-%d") + ".docx")
     doc.save(doc_name)
 
     messagebox.showinfo("Invoice Complete", "Invoice Complete")
@@ -70,7 +70,6 @@ def generate_invoice():
 
 app = CTk()
 app.title("INVOGEN")
-#add icon to title bar SOMEHOW....
 
 frame = CTkFrame(app, fg_color="#222324")
 frame.pack()
