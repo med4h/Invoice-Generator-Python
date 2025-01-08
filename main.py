@@ -22,12 +22,21 @@ def new_invoice():
 
 invoice_list = []
 def add_item():
-    qty = int(qty_entry.get())
-    desc = description_entry.get()
-    price = float(unit_price_entry.get()) 
-    line_total = qty*price
+    try:
+        qty = int(qty_entry.get())
+        desc = description_entry.get()
+        price = float(unit_price_entry.get())                                                   
+        phone = phone_entry.get()
+
+        if not all(char.isdigit() or char in "()-" for char in phone):
+            raise ValueError
+    except ValueError:
+        messagebox.showerror("Invalid Input", "Invalid Input")
+        return
+
+    line_total = round(qty * price, 2)
     invoice_item = [qty, desc, price, line_total]
-    treeview.insert('',0, values=invoice_item)
+    treeview.insert('', 0, values=invoice_item)
     clear_item()
     invoice_list.append(invoice_item)
 
